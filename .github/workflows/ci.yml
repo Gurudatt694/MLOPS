@@ -1,1 +1,9 @@
-
+name: CI-CD-tfx-MLOPS
+on: [push]
+jobs:
+  myjob:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run a one-line script
+      run: pip install --requirements requirements.txt
