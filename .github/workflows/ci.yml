@@ -9,6 +9,6 @@ jobs:
       run: pip install -r requirements.txt
     - id: Notebook
       name: Execute Jupyter Notebook
-      run: Notebook execute MLOPS_Taxi_TipDataset.ipynb
+      run: Python execute MLOPS_Taxi_TipDataset.ipynb
       shell: bash
       
