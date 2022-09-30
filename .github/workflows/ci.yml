@@ -4,6 +4,6 @@ jobs:
   myjob:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
     - name: Run a one-line script
-      run: pip install --requirements requirements.txt
+      run: pip install -r requirements.txt
