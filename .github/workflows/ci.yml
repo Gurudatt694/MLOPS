@@ -1,14 +1,45 @@
-name: CI-CD-tfx-MLOPS
-on: [push]
+name: CI - Semantic Seg - Training Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      
+  pull_request:      
+
 jobs:
-  myjob:
+  ci-seg:
     runs-on: ubuntu-latest
+  
     steps:
-    - uses: actions/checkout@v2
-    - name: Run a one-line script
-      run: pip install -r requirements.txt
-    - id: Notebook
-      name: Execute Jupyter Notebook
-      run: Python execute MLOPS_Taxi_TipDataset.ipynb
-      shell: bash
+    - uses: actions/checkout@v2.4.2
+
+    - name: check if training pipeline has anything changed
+      uses: dorny/paths-filter@v2
+      id: training-pipeline-change
+    
+   
+      
+        
+    - name: 'Install required Python packages'
+      
+      run: |
+        pip install -r requirements.txt
+#     
+
+    - name: 'Compile TFX Training Pipeline'
+      if: steps.training-pipeline-change.outputs.src == 'true'    
+      working-directory: 'build'
+      run: |
+        tfx pipeline compile \
+          --pipeline-path trainer.py \
+          --engine vertex
+          
+    - name: 'Create TFX Training Pipeline'
+      if: steps.training-pipeline-change.outputs.src == 'true'    
+      working-directory: 'build'
+      run: |
+        tfx pipeline create \
+          --pipeline-path trainer.py \
+          --engine vertex
       
