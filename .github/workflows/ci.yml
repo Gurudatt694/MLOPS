@@ -21,7 +21,7 @@ jobs:
 #     
 
     - name: 'Compile TFX Training Pipeline'
-      if: steps.training-pipeline-change.outputs.src == 'true'    
+       
       working-directory: 'build'
       run: |
         tfx pipeline compile \
@@ -29,7 +29,7 @@ jobs:
           --engine vertex
           
     - name: 'Create TFX Training Pipeline'
-      if: steps.training-pipeline-change.outputs.src == 'true'    
+        
       working-directory: 'build'
       run: |
         tfx pipeline create \
